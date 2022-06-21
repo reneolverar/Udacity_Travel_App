@@ -20,7 +20,7 @@
         <main>
             <section>
                 <h1>Travel Planner</h1>
-                <form class="" onsubmit="return Client.handleSubmit(event)">
+                <form class="" onsubmit="return Client.testFunction(event)">
                     Please choose the city you are travelling to:
                     <input class="travel-city" id="city" type="text" name="city" placeholder="City" value="Cerro Azul">
                     <p>Please choose the dates you are travelling:</p>
@@ -38,12 +38,13 @@
 
             <section id="mytrips">
                 <strong>My trips:</strong>
-                <div class="mytrip-container">
+                <div id="mytrip-container" class="mytrip-container">
                     <img class="mytrip-image" id="mytrip-image" src="" alt="">
                     <span class="mytrip-image-details" id="mytrip-image-description"></span>
                     <span class="mytrip-info" id="mytrip-info"></span>
-                    <div class="mytrip-options">
+                    <div id="mytrip-options" class="mytrip-options">
                         <input type="submit" value="Print trip" onclick="Client.printHTML('mytrips')" onsubmit="Client.printHTML('mytrips')">
+                        <input type="submit" value="Delete destination" onclick="Client.deleteHTMLElement(event)" onsubmit="Client.deleteHTMLElement(event)">
                     </div>
                     <div class="weather-container" id="weather-container">
                         <p class="weather-info" id="weather-info"></p>
@@ -67,6 +68,5 @@
                 });
             }
         </script> -->
-        <!-- <script src="print.js"></script> -->
     </body>
 </html>

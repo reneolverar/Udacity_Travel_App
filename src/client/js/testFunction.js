@@ -1,6 +1,10 @@
+let mytripHTML
+
 export function testFunction(event) {
     event.preventDefault()
     console.log("::: Form Submitted :::")
+
+    document.getElementById("mytrips").innerHTML = mytripHTML
 
     getApiKeys()
     .then(function(res){
@@ -187,6 +191,7 @@ export async function getWeatherbit (weatherbit_apikey, lat, long) {
 // Show trip example
 window.addEventListener('DOMContentLoaded', (event) => {
     let moment = require('moment')
+    mytripHTML = document.getElementById("mytrips").innerHTML
     document.getElementById("mytrip-image").src = 'http://localhost:8081/images/city_img_template.jpg'
     document.getElementById('trip-start').value = moment().add(3, 'days').format('YYYY-MM-DD')
     document.getElementById('trip-end').value = moment().add(6, 'days').format('YYYY-MM-DD')

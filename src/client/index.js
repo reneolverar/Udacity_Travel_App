@@ -1,9 +1,9 @@
-import { handleSubmit } from './js/formHandler';
-import { sentimentAnalysisCheck } from './js/sentimentAnalysis';
 import { testFunction } from './js/testFunction';
 import { todaysDate } from './js/testFunction';
 import { printHTML } from './js/printHTML';
 import print from 'print-js'
+import { deleteHTMLElement } from './js/deleteHTMLElement';
+
 
 import './styles/resets.scss'
 import './styles/base.scss'
@@ -13,10 +13,9 @@ import './styles/header.scss'
 import './styles/layouts.scss'
 
 export {
-    handleSubmit,
-    sentimentAnalysisCheck,
     testFunction,
     todaysDate,
     printHTML,
-    print
+    print,
+    deleteHTMLElement
 }
