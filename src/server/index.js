@@ -19,6 +19,9 @@ app.use('/images', express.static('src/client/media/images'))
 // Host weatherbit icons
 app.use('/weatherbit_icons', express.static('src/client/media/weatherbit_icons'))
 
+// Dist folder for main.css for printing module
+app.use('/dist', express.static('dist'))
+
 // Use environment variables for API_Key:
 const dotenv = require('dotenv')
 dotenv.config()

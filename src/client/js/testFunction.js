@@ -1,7 +1,6 @@
 export function testFunction(event) {
     event.preventDefault()
-    console.log("::: Test Submitted :::")
-    document.getElementById('testResults').innerHTML = ""
+    console.log("::: Form Submitted :::")
 
     getApiKeys()
     .then(function(res){
@@ -128,7 +127,7 @@ export async function getApiKeys () {
 export async function getGeonames (geonames_apikey, city) {
     // Fetch Geonames data
     console.log("Fetching geonames")
-    document.getElementById('testResults').innerHTML += encodeURIComponent("töt Nex")
+    // document.getElementById('testResults').innerHTML += encodeURIComponent("töt Nex")
     const res = await fetch('http://api.geonames.org/searchJSON?q='+ city + '&maxRows=10&username=' + geonames_apikey)
     try {
         if (res.status != '200') {

@@ -14,26 +14,6 @@ Page layouts
         "wea";
         background-color: lightblue;
     }
-
-    .blog-post-layout{
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 100px 1fr 650px 100px;
-        grid-template-areas:
-        "hd hd"
-        "main main"
-        "sb sb"
-        "ft ft";
-    }
-
-    .author-container{  /* Frame for author image and description */
-        margin-bottom: 25px;
-         /* Add shadows to create the "card" effect */
-        padding: 10px 5px;
-        box-shadow: 0 4px 8px 0 #00000033;
-        transition: 0.5s;
-        text-align: center;
-    }
 }
 
 @media (min-width: 601px){ /* Medium-Large Screens */
@@ -43,46 +23,16 @@ Page layouts
         grid-template-rows: auto;
         grid-template-areas:
         "img ttl"
-        "opt ttl"
+        "img opt"
+        "idt opt"
         "wea wea";
         background-color: lightblue;
-    }
-
-    .blog-post-layout {
-        display:grid;
-        grid-template-columns: 1fr 200px 200px;
-        grid-template-rows: 100px 1fr 100px;
-        grid-template-areas:
-        "hd sb sb"
-        "main sb sb"
-        "ft ft ft";
-    }
-
-    .author-container{
-        margin-bottom: 25px;
-        padding: 10px 5px;
-        display: flex;
-        flex-wrap: wrap;
-         /* Add shadows to create the "card" effect */
-        box-shadow: 0 4px 8px 0 #00000033;
-        transition: 0.5s;
-    }
-
-    .author-image{
-        display: inline-block;
-        text-align: center;
-    }
-
-    .author-text{
-        display: inline-block;
     }
 }
 
 /*===============================================
 Page layouts
 ===============================================*/
-
-
 
 .mytrip-image{
     grid-area: img;
@@ -93,7 +43,7 @@ Page layouts
 }
 
 .mytrip-image-details{
-    grid-area: opt;
+    grid-area: idt;
     width: 100%;
     padding: 5px;
     margin: 5px;
@@ -102,6 +52,17 @@ Page layouts
 .mytrip-info{
     grid-area: ttl;
     margin: 5px;
+    display: block;
+}
+
+.mytrip-options{
+    grid-area: opt;
+    margin: 5px;
+    display: block;
+}
+
+input .mytrip-options{
+    width: 50%;
 }
 
 .weather-container{

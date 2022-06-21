@@ -36,23 +36,20 @@
                 </form>
             <section>
 
-            <section>
+            <section id="mytrips">
                 <strong>My trips:</strong>
                 <div class="mytrip-container">
                     <img class="mytrip-image" id="mytrip-image" src="" alt="">
                     <span class="mytrip-image-details" id="mytrip-image-description"></span>
                     <span class="mytrip-info" id="mytrip-info"></span>
+                    <div class="mytrip-options">
+                        <input type="submit" value="Print trip" onclick="Client.printHTML('mytrips')" onsubmit="Client.printHTML('mytrips')">
+                    </div>
                     <div class="weather-container" id="weather-container">
                         <p class="weather-info" id="weather-info"></p>
                         <span id="weather-details-container"></span>
                     </div>
                 </div>
-                <div id="results"></div>
-            </section>
-
-            <section>
-                <strong>Test Results:</strong>
-                <div id="testResults"></div>
             </section>
 
         </main>
@@ -70,6 +67,6 @@
                 });
             }
         </script> -->
-
+        <!-- <script src="print.js"></script> -->
     </body>
 </html>
