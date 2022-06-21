@@ -3,7 +3,7 @@ Page layouts
 ===============================================*/
 
 @media (max-width: 600px){  /* Small screens */
-    .mytrip-container {
+    .destination-container {
         display:grid;
         grid-template-columns: 100%;
         grid-template-rows: auto;
@@ -13,11 +13,12 @@ Page layouts
         "opt"
         "wea";
         background-color: lightblue;
+        margin: 10px 0px;
     }
 }
 
 @media (min-width: 601px){ /* Medium-Large Screens */
-    .mytrip-container {
+    .destination-container {
         display:grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
@@ -27,6 +28,7 @@ Page layouts
         "idt opt"
         "wea wea";
         background-color: lightblue;
+        margin: 10px 0px;
     }
 }
 
@@ -34,7 +36,7 @@ Page layouts
 Page layouts
 ===============================================*/
 
-.mytrip-image{
+.destination-image{
     grid-area: img;
     width: 100%;
     max-height: 300px;
@@ -42,26 +44,26 @@ Page layouts
     margin: 5px;
 }
 
-.mytrip-image-details{
+.destination-image-details{
     grid-area: idt;
     width: 100%;
     padding: 5px;
     margin: 5px;
 }
 
-.mytrip-info{
+.destination-info{
     grid-area: ttl;
     margin: 5px;
     display: block;
 }
 
-.mytrip-options{
+.destination-options{
     grid-area: opt;
     margin: 5px;
     display: block;
 }
 
-input .mytrip-options{
+input .destination-options{
     width: 50%;
 }
 

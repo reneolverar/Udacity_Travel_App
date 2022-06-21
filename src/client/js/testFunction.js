@@ -1,10 +1,17 @@
-let mytripHTML
+let destID = 0
 
 export function testFunction(event) {
     event.preventDefault()
     console.log("::: Form Submitted :::")
+    destID += 1
 
-    document.getElementById("mytrips").innerHTML = mytripHTML
+    addDestination(destID)
+
+    // // Add destination HTML
+    // let destHTML = document.createElement('div');
+    // destHTML.innerHTML = destinationHTML.innerHTML
+    // document.getElementById("mytrips").appendChild(destHTML)
+    // // document.getElementById("mytrips").appendChild(mytripHTML)
 
     getApiKeys()
     .then(function(res){
@@ -35,9 +42,9 @@ export function testFunction(event) {
                         webURL = res.hits[index].webformatURL
                         imageURL = res.hits[index].pageURL
                         tags = res.hits[index].tags
-                        document.getElementById("mytrip-image-description").innerHTML = "Pixabay.com image of " + city + ", " + countryName;
-                        document.getElementById("mytrip-image").alt = "Pixabay.com image of " + city + ", " + countryName;
-                        document.getElementById("mytrip-image").src = webURL;
+                        document.getElementById("destination-image-description" + destID).innerHTML = "Pixabay.com image of " + city + ", " + countryName;
+                        document.getElementById("destination-image" + destID).alt = "Pixabay.com image of " + city + ", " + countryName;
+                        document.getElementById("destination-image" + destID).src = webURL;
                         break
                     }
                 }
@@ -49,18 +56,18 @@ export function testFunction(event) {
                                 webURL = res.hits[index].webformatURL
                                 imageURL = res.hits[index].pageURL
                                 tags = res.hits[index].tags
-                                document.getElementById("mytrip-image-description").innerHTML = "Pixabay.com image of " + countryName;
-                                document.getElementById("mytrip-image").alt = "Pixabay.com image of " + countryName;
-                                document.getElementById("mytrip-image").src = webURL;
+                                document.getElementById("destination-image-description" + destID).innerHTML = "Pixabay.com image of " + countryName;
+                                document.getElementById("destination-image" + destID).alt = "Pixabay.com image of " + countryName;
+                                document.getElementById("destination-image" + destID).src = webURL;
                                 break
                             }
                         }
                     })
                 }
                 if (webURL == "") {
-                    document.getElementById("mytrip-image-description").innerHTML = "City or country not found";
+                    document.getElementById("destination-image-description" + destID).innerHTML = "City or country not found";
                 }
-                document.getElementById("mytrip-info").innerHTML = `
+                document.getElementById("destination-info" + destID).innerHTML = `
                     <strong>My trip to: ${city}, ${countryName}<br>
                     Departing: ${startDate.format('DD-MM-YYYY')}<br>
                     Returning: ${endDate.format('DD-MM-YYYY')}<br>
@@ -74,9 +81,9 @@ export function testFunction(event) {
                         let weatherDate = [], sunrise = [], sunset = [], tempMax = [], tempMin = [], apparentTempMax = [], apparentTempMin = [], relativeHumidity = [], cloudCoverage = [], weatherIcon = [], weatherDescription = [], rainProb = []
                         sunrise[0] = new Date(res.data[0].sunrise_ts).toLocaleTimeString("en-US")
                         sunset[0] =  new Date(res.data[0].sunset_ts).toLocaleTimeString("en-US")
-                        document.getElementById("weather-info").innerHTML = `The typical weather for the chosen date(s) is:<br>
+                        document.getElementById("weather-info" + destID).innerHTML = `The typical weather for the chosen date(s) is:<br>
                                 Sunrise at ${sunrise[0]}, Sunset at ${sunset[0]}<br>`
-                        document.getElementById("weather-details-container").innerHTML="";
+                        document.getElementById("weather-details-container" + destID).innerHTML="";
                         for (let index = daysToTrip; index < daysToTrip + tripDuration; index++) {
                             if (index > res.data.length ) {
                                 break
@@ -96,7 +103,7 @@ export function testFunction(event) {
                             let img = document.createElement('img');
                             img.src = "http://localhost:8081/weatherbit_icons/" + weatherIcon[index-daysToTrip] + ".png";
                             img.setAttribute('class', 'weather-image', 'id', 'weather-image' + (index-daysToTrip));
-                            document.getElementById("weather-details-container").appendChild(img);
+                            document.getElementById("weather-details-container" + destID).appendChild(img);
                             let det = document.createElement('p');
                             det.innerHTML = `
                                 <strong>${moment(weatherDate[index-daysToTrip]).format('DD-MM-YYYY')}</strong><br>
@@ -104,7 +111,7 @@ export function testFunction(event) {
                                 Hum ${relativeHumidity[index-daysToTrip]}% Cloud ${cloudCoverage[index-daysToTrip]}% Rain ${rainProb[index-daysToTrip]}%<br>
                                 ${weatherDescription[index-daysToTrip]}`
                             det.setAttribute('class', 'weather-details', 'id', 'weather-details' + (index-daysToTrip));
-                            document.getElementById("weather-details-container").appendChild(det);
+                            document.getElementById("weather-details-container" + destID).appendChild(det);
                         }
                     })
                 } else {
@@ -112,6 +119,26 @@ export function testFunction(event) {
         })
     })
 }
+
+function addDestination(destID) {
+    let div = document.createElement('div');
+    div.id = "destNum" + destID;
+    div.className = "destination-container"
+    div.innerHTML = `
+        <img id="${"destination-image" + destID}" class="destination-image" src="" alt="">
+        <span id="${"destination-image-description" + destID}" class="destination-image-details"></span>
+        <span id="${"destination-info" + destID}" class="destination-info"></span>
+        <div id="${"destination-options" + destID}" class="destination-options">
+            <input type="submit" value="Print trip" onclick="Client.printHTML('mytrips')" onsubmit="Client.printHTML('mytrips')">
+            <input type="submit" value="Delete destination" onclick="Client.deleteHTMLElement(event)" onsubmit="Client.deleteHTMLElement(event)">
+        </div>
+        <div id="${"weather-container" + destID}" class="weather-container">
+            <p id="${"weather-info" + destID}" class="weather-info"></p>
+            <span id="${"weather-details-container" + destID}"></span>
+        </div>`
+    document.getElementById("mytrips").appendChild(div);
+}
+
 export async function getApiKeys () {
     // Get API KEYS from server
     console.log("Fetching API key from server");
@@ -188,20 +215,11 @@ export async function getWeatherbit (weatherbit_apikey, lat, long) {
     }
 }
 
-// Show trip example
+// Initialize values
 window.addEventListener('DOMContentLoaded', (event) => {
     let moment = require('moment')
-    mytripHTML = document.getElementById("mytrips").innerHTML
-    document.getElementById("mytrip-image").src = 'http://localhost:8081/images/city_img_template.jpg'
     document.getElementById('trip-start').value = moment().add(3, 'days').format('YYYY-MM-DD')
     document.getElementById('trip-end').value = moment().add(6, 'days').format('YYYY-MM-DD')
-    document.getElementById("mytrip-image").alt = "Pixabay.com image of London, United Kingdom"
-    document.getElementById("mytrip-info").innerHTML = `
-        <strong>My trip to:  London, United Kingdom<br>
-        Departing: ${moment(document.getElementById('trip-start').value).format('DD-MM-YYYY')}<br>
-        Returning: ${moment(document.getElementById('trip-end').value).format('DD-MM-YYYY')}<br>
-        Total days: 3</strong><br><br>
-        London, United Kingdom is 3 days away.`
 });
 
 
