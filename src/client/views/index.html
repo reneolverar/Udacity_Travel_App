@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Evaluate News Article</title>
     </head>
 
@@ -18,32 +19,49 @@
 
         <main>
             <section>
-                <h1>Sentiment analyser</h1>
+                <h1>Travel Planner</h1>
                 <form class="" onsubmit="return Client.handleSubmit(event)">
-                    Please choose what to analyze: Text or a URL
-                    <div>
-                        <label for="txt">Text</label>
-                        <input type="radio" name="text_type" value="Text" checked="true" id="txt">
-                        <label for="url">URL</label>
-                        <input type="radio" name="text_type" value="URL" id="url">
-                        <p id="output"></p>
+                    Please choose the city you are travelling to:
+                    <input class="travel-city" id="city" type="text" name="city" placeholder="City" value="Cerro Azul">
+                    <p>Please choose the dates you are travelling:</p>
+                    <div class="travel-dates">
+                        <label for="trip-start">Start date:</label>
+                        <input class="trip-start" type="date" id="trip-start" name="trip-start">
                     </div>
-                    <input id="name" type="text" name="input" value="" placeholder="Name">
-                    <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
+                    <div class="travel-dates">
+                        <label for="trip-end">End date:</label>
+                        <input class="trip-end" type="date" id="trip-end" name="trip-end">
+                    </div>
+                    <input class="form-submit-btn" type="submit" name="" value="submit" onclick="return Client.testFunction(event)" onsubmit="return Client.testFunction(event)">
                 </form>
             <section>
 
             <section>
-                <strong>Form Results:</strong>
+                <strong>My trips:</strong>
+                <div class="mytrip-container">
+                    <img class="mytrip-image" id="mytrip-image" src="" alt="">
+                    <span class="mytrip-image-details" id="mytrip-image-description"></span>
+                    <span class="mytrip-info" id="mytrip-info"></span>
+                    <div class="weather-container" id="weather-container">
+                        <p class="weather-info" id="weather-info"></p>
+                        <span id="weather-details-container"></span>
+                    </div>
+                </div>
                 <div id="results"></div>
             </section>
+
+            <section>
+                <strong>Test Results:</strong>
+                <div id="testResults"></div>
+            </section>
+
         </main>
 
         <footer>
             <p>This is a footer</p>
         </footer>
 
-        <script>
+        <!-- <script>
             // Check that service workers are supported
             if ('serviceWorker' in navigator) {
                 // Use the window load event to keep the page load performant
@@ -51,7 +69,7 @@
                     navigator.serviceWorker.register('/service-worker.js');
                 });
             }
-        </script>
+        </script> -->
 
     </body>
 </html>
