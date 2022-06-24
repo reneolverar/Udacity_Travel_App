@@ -1,8 +1,10 @@
 import { testFunction } from './js/testFunction';
-import { todaysDate } from './js/testFunction';
 import { printHTML } from './js/printHTML';
 import print from 'print-js'
-import { deleteHTMLElement } from './js/deleteHTMLElement';
+import { getApiKeys } from './js/apiCalls';
+import { getGeonames } from './js/apiCalls';
+import { getPixabay } from './js/apiCalls';
+import { getWeatherbit } from './js/apiCalls';
 
 
 import './styles/resets.scss'
@@ -14,8 +16,10 @@ import './styles/layouts.scss'
 
 export {
     testFunction,
-    todaysDate,
     printHTML,
     print,
-    deleteHTMLElement
+    getApiKeys,
+    getGeonames,
+    getPixabay,
+    getWeatherbit
 }

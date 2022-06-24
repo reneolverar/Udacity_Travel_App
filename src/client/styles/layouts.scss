@@ -13,7 +13,7 @@ Page layouts
         "opt"
         "wea";
         background-color: lightblue;
-        margin: 10px 0px;
+        margin: 10px;
     }
 }
 
@@ -26,15 +26,20 @@ Page layouts
         "img ttl"
         "img opt"
         "idt opt"
+        "det det"
         "wea wea";
         background-color: lightblue;
-        margin: 10px 0px;
+        margin: 10px;
     }
 }
 
 /*===============================================
 Page layouts
 ===============================================*/
+
+.trip-container{
+    background-color: lightcoral;
+}
 
 .destination-image{
     grid-area: img;
@@ -67,6 +72,52 @@ input .destination-options{
     width: 50%;
 }
 
+.destination-details-container{
+    grid-area: det;
+    margin: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.destination-details-container input{
+    display: none;
+    width: 45%;
+}
+
+.hotel-info-details input {
+    display: flex;
+    width: 45%;
+}
+
+.hotel-info-details textarea {
+    display: flex;
+    width: 90%;
+}
+
+.flight-info, .hotel-info {
+    display: block;
+    margin: 5px;
+    width: 48%;
+}
+
+.flight-info-details, .hotel-info-details {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+}
+
+.flight-info span, .hotel-info span{
+    margin: 0px;
+}
+
+.destination-icon{
+    margin: 5px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .weather-container{
     grid-area: wea;
     margin: 5px;
@@ -80,14 +131,14 @@ input .destination-options{
 
 .weather-image{
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     margin: 5px;
 }
 
 .weather-details{
     display: inline-block;
-    font-size: 75%;
+    font-size: 70%;
 }
 
 .travel-dates {

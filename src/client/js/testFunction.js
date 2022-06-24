@@ -1,38 +1,43 @@
-let destID = 0
+let tripID = 0, destID = 0, hotelID = 0, flightID = 0, destinationLoad = false
+let destinations = [""]
 
-export function testFunction(event) {
-    event.preventDefault()
-    console.log("::: Form Submitted :::")
-    destID += 1
+export async function testFunction(event = "", destination = "") {
 
-    addDestination(destID)
+    if (destination == "") {
+        event.preventDefault()
+        console.log("::: Form Submitted :::")
+        destID += 1
+        let dest = new Destination(destID);
+        destinations[destID] = dest
+        localStorage.setItem('destinations', JSON.stringify(destinations))
+    } else {
+        console.log("::: Building page from local storage :::")
+        destID = destination.destID
+        let dest = new Destination(destID, destination.hotels, destination.hotelID, destination.flights, destination.flightID);
+        destinations[destID] = dest
+    }
 
-    // // Add destination HTML
-    // let destHTML = document.createElement('div');
-    // destHTML.innerHTML = destinationHTML.innerHTML
-    // document.getElementById("mytrips").appendChild(destHTML)
-    // // document.getElementById("mytrips").appendChild(mytripHTML)
+    // Get days until trip
+    let moment = require('moment')
+    let startDate = moment(document.getElementById('trip-start').value, 'YYYY-MM-DD')
+    let endDate = moment(document.getElementById('trip-end').value, 'YYYY-MM-DD')
+    let daysToTrip = startDate.diff(moment().format('YYYY-MM-DD'),'days')
+    let tripDuration = endDate.diff(startDate,'days')
 
-    getApiKeys()
+
+    Client.getApiKeys()
     .then(function(res){
         let geonames_apikey = res.GEONAMES_USER_NAME
         let pixabay_apikey = res.PIXABAY_APIKEY
         let weatherbit_apikey = res.WEATHERBIT_APIKEY
 
-        // Get days until trip
-        let moment = require('moment')
-        let startDate = moment(document.getElementById('trip-start').value, 'YYYY-MM-DD')
-        let endDate = moment(document.getElementById('trip-end').value, 'YYYY-MM-DD')
-        let daysToTrip = startDate.diff(moment().format('YYYY-MM-DD'),'days')
-        let tripDuration = endDate.diff(startDate,'days')
-
         let city = document.getElementById('city').value
-        getGeonames(geonames_apikey, city)
+        Client.getGeonames(geonames_apikey, city)
         .then(function(res){
             let long = res.geonames[0].lng
             let lat = res.geonames[0].lat
             let countryName = res.geonames[0].countryName
-            getPixabay(pixabay_apikey, city, countryName)
+            Client.getPixabay(pixabay_apikey, city, countryName)
             .then(function(res){
                 let webURL = "", imageURL ="", tags =""
                 // Fill trip information
@@ -49,7 +54,7 @@ export function testFunction(event) {
                     }
                 }
                 if (webURL == "") {
-                    getPixabay(pixabay_apikey, city, countryName, "country")
+                    Client.getPixabay(pixabay_apikey, city, countryName, "country")
                     .then(function(res){
                         for (let index = 0; index < res.hits.length; index++) {
                             if (res.hits[index].tags.search(countryName.toLowerCase()) > 0) {
@@ -76,7 +81,7 @@ export function testFunction(event) {
                 })
 
                 if (daysToTrip < 15) {
-                    getWeatherbit(weatherbit_apikey, lat, long)
+                    Client.getWeatherbit(weatherbit_apikey, lat, long)
                     .then(function(res){
                         let weatherDate = [], sunrise = [], sunset = [], tempMax = [], tempMin = [], apparentTempMax = [], apparentTempMin = [], relativeHumidity = [], cloudCoverage = [], weatherIcon = [], weatherDescription = [], rainProb = []
                         sunrise[0] = new Date(res.data[0].sunrise_ts).toLocaleTimeString("en-US")
@@ -112,106 +117,107 @@ export function testFunction(event) {
                                 ${weatherDescription[index-daysToTrip]}`
                             det.setAttribute('class', 'weather-details', 'id', 'weather-details' + (index-daysToTrip));
                             document.getElementById("weather-details-container" + destID).appendChild(det);
+                            return destinationLoad = true
                         }
                     })
                 } else {
                 }
-        })
+         })
     })
 }
 
-function addDestination(destID) {
-    let div = document.createElement('div');
-    div.id = "destNum" + destID;
-    div.className = "destination-container"
-    div.innerHTML = `
-        <img id="${"destination-image" + destID}" class="destination-image" src="" alt="">
-        <span id="${"destination-image-description" + destID}" class="destination-image-details"></span>
-        <span id="${"destination-info" + destID}" class="destination-info"></span>
-        <div id="${"destination-options" + destID}" class="destination-options">
-            <input type="submit" value="Print trip" onclick="Client.printHTML('mytrips')" onsubmit="Client.printHTML('mytrips')">
-            <input type="submit" value="Delete destination" onclick="Client.deleteHTMLElement(event)" onsubmit="Client.deleteHTMLElement(event)">
-        </div>
-        <div id="${"weather-container" + destID}" class="weather-container">
-            <p id="${"weather-info" + destID}" class="weather-info"></p>
-            <span id="${"weather-details-container" + destID}"></span>
-        </div>`
-    document.getElementById("mytrips").appendChild(div);
-}
+class Destination {
+    // Properties
+    hotels = []; hotelID = 0; flights = []; flightID = 0;
+    // Constructor
+    constructor(destID, hotels = [], hotelID = 0, flights = [], flightID = 0) {
+        console.log("New destination dest" + destID + " created")
+        this.destID = destID;
+        let div = document.createElement('div');
+        div.id = "destNum" + destID;
+        div.className = "destination-container"
+        this.html = `
+            <img id="${"destination-image" + destID}" class="destination-image" src="" alt="">
+            <span id="${"destination-image-description" + destID}" class="destination-image-details"></span>
+            <span id="${"destination-info" + destID}" class="destination-info"></span>
+            <div id="${"destination-options" + destID}" class="destination-options">
+                <input id="${"addFlight" + destID}" type="submit" value="Add flight info">
+                <input id="${"addHotel" + destID}" type="submit" value="Add hotel info">
+                <input type="submit" value="Print trip" onclick="Client.printHTML('mytrips')" onsubmit="Client.printHTML('mytrips')">
+                <input id="${"deleteDestination" + destID}" type="submit" value="Delete destination">
+            </div>
+            <div id="${"destination-details-container" + destID}" class="destination-details-container">
+                <div id="${"flight-info" + destID}" class="flight-info"></div>
+                <div id="${"hotel-info" + destID}" class="hotel-info"></div>
+            </div>
+            <div id="${"weather-container" + destID}" class="weather-container">
+                <p id="${"weather-info" + destID}" class="weather-info"></p>
+                <span id="${"weather-details-container" + destID}"></span>
+            </div>`
+        div.innerHTML = this.html
+        document.getElementById("mytrips").appendChild(div);
+        document.getElementById("addHotel" + this.destID).addEventListener("click",function(event){
+            destinations[this.destID].addHotel(destinations[this.destID])
+        })
+        document.getElementById("addFlight" + this.destID).addEventListener("click",function(event){
+            destinations[this.destID].addFlight(destinations[this.destID])
+        })
+        document.getElementById("deleteDestination" + this.destID).addEventListener("click",function(event){
+            destinations[this.destID].deleteDestination(event, destinations[this.destID])
+        })
+    }
+    // Methods
+    addHotel(dest) {
+        dest.hotelID += 1
+        dest.hotels[dest.hotelID] = {"HTML": `
+            <img id= "hotel-${dest.destID}${dest.hotelID}-delete" class="destination-icon" src="http://localhost:8081/images/delete_icon.png" alt="delete_icon">
+            <textarea id="hotel-name-${dest.destID}${dest.hotelID}" type="text" name="hotel-name" placeholder="Hotel details"></textarea>
+            <input id="hotel-arrival-${dest.destID}${dest.hotelID}" type="date" name="hotel-arrival">
+            <input id="hotel-departure-${dest.destID}${dest.hotelID}" type="date" name="hotel-departure">`};
+        let div = document.createElement('div');
+        div.className = 'hotel-info-details';
+        div.innerHTML = dest.hotels[dest.hotelID].HTML
+        document.getElementById("hotel-info" + dest.destID).appendChild(div)
+        document.getElementById("hotel-" + dest.destID + dest.hotelID + "-delete").addEventListener("click",function(event){
+            destinations[destID].deleteHotel(dest, dest.hotelID, event)
+        })
+        localStorage.setItem('destinations', JSON.stringify(destinations))
+    }
 
-export async function getApiKeys () {
-    // Get API KEYS from server
-    console.log("Fetching API key from server");
-    const res = await fetch('http://localhost:8081/apiKey')
-    try {
-        if (res.status != '200') {
-            throw Error(res.status);
-        }
-        const body = await res.json();
-        return body
-    } catch (error) {
-        // appropriately handle the error
-        console.log('error', error);
-        return error;
+    deleteHotel(dest, hotelID, event) {
+        dest.hotels.splice(hotelID, 1)
+        event.target.parentElement.remove()
+        dest.hotelID -= 1
+        localStorage.setItem('destinations', JSON.stringify(destinations))
     }
-}
-export async function getGeonames (geonames_apikey, city) {
-    // Fetch Geonames data
-    console.log("Fetching geonames")
-    // document.getElementById('testResults').innerHTML += encodeURIComponent("töt Nex")
-    const res = await fetch('http://api.geonames.org/searchJSON?q='+ city + '&maxRows=10&username=' + geonames_apikey)
-    try {
-        if (res.status != '200') {
-            throw Error(res.status);
-        }
-        const body = await res.json();
-        console.log(body)
-        return body
-    } catch (error) {
-        // appropriately handle the error
-        console.log('error', error);
-        return error;
+
+    addFlight(dest) {
+        dest.flightID += 1
+        dest.flights[dest.flightID] = {"HTML": `
+            <img id= "flight-${dest.destID}${dest.flightID}-delete" class="destination-icon" src="http://localhost:8081/images/delete_icon.png" alt="delete_icon">
+            <textarea id="flight-name-${dest.destID}${dest.flightID}" type="text" name="flight-name" placeholder="Flight details"></textarea>`};
+        let div = document.createElement('div');
+        div.className = 'flight-info-details';
+        div.innerHTML = dest.flights[dest.flightID].HTML
+        document.getElementById("flight-info" + dest.destID).appendChild(div)
+        document.getElementById("flight-" + dest.destID + dest.flightID + "-delete").addEventListener("click",function(event){
+            destinations[destID].deleteFlight(dest, dest.flightID, event)
+        })
+        localStorage.setItem('destinations', JSON.stringify(destinations))
     }
-}
-export async function getPixabay (pixabay_apikey, city, countryName, search = "city") {
-    // Fetch Pixabay
-    console.log("Fetching pixbay")
-    let fetchURL
-    if (search == "city") {
-        fetchURL = 'https://pixabay.com/api/?key=' + pixabay_apikey + '&q=' + city + '%20' + countryName + '&image_type=photo&pretty=true&category=places'
+
+    deleteFlight(dest, flightID, event) {
+        dest.flights.splice(flightID, 1)
+        event.target.parentElement.remove()
+        dest.flightID -= 1
+        localStorage.setItem('destinations', JSON.stringify(destinations))
     }
-    else {
-        fetchURL = 'https://pixabay.com/api/?key=' + pixabay_apikey + '&q=' + countryName + '&image_type=photo&pretty=true&category=places'
-    }
-    const res = await fetch(fetchURL)
-    try {
-        if (res.status != '200') {
-            throw Error(res.status);
-        }
-        const body = await res.json();
-        console.log(body)
-        return body
-    } catch (error) {
-        // appropriately handle the error
-        console.log('error', error);
-        return error;
-    }
-}
-export async function getWeatherbit (weatherbit_apikey, lat, long) {
-    // Fetch weatherbit information
-    console.log("Fetching weatherbit")
-    const res = await fetch("https://api.weatherbit.io/v2.0/forecast/daily?lat=" + lat + "&lon=" + long + "&key=" + weatherbit_apikey)
-    try {
-        if (res.status != '200') {
-            throw Error(res.status);
-        }
-        const body = await res.json();
-        console.log(body)
-        return body
-    } catch (error) {
-        // appropriately handle the error
-        console.log('error', error);
-        return error;
+
+    deleteDestination (event, dest) {
+        console.log(event.target.parentElement.parentElement.parentElement.id)
+        event.target.parentElement.parentElement.remove()
+        destinations.splice(dest.destID, 1)
+        localStorage.setItem('destinations', JSON.stringify(destinations))
     }
 }
 
@@ -222,25 +228,50 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('trip-end').value = moment().add(6, 'days').format('YYYY-MM-DD')
 });
 
+window.onload = function() {
+    const localStorageDestinations = JSON.parse(localStorage.getItem('destinations'))
+    console.log(localStorageDestinations)
+    for (let index = 1; index < localStorageDestinations.length; index++) {
+        testFunction("", localStorageDestinations[index])
+        // while (destinationLoad == false) {
+        // }
+    }
+};
 
-export function todaysDate(){
-    // return new Date().format('d-m-Y')
-    let today = new Date().toLocaleDateString()
-    console.log(today)
-    return today
-}
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-export function isValidURL(string) {
-    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    const space = string.match(/ /gm);
-    return (res !== null && space == null)
-}
-
-function checkTextType(){
-    const radioButtons = document.querySelectorAll('input[name="text_type"]');
-    for (const radioButton of radioButtons) {
-        if (radioButton.checked) {
-            return radioButton.value;
-        }
+async function redoLocalStorage (destination) {
+    const res = await testFunction("", destination);
+    try {
+        const body = await res;
+        console.log(body)
+        return body
+    } catch (error) {
+        // appropriately handle the error
+        console.log('error', error);
+        return error;
     }
 }
+
+
+// Extra code:
+// this.html = `
+//             <img id="${"destination-image" + destID}" class="destination-image" src="" alt="">
+//             <span id="${"destination-image-description" + destID}" class="destination-image-details"></span>
+//             <span id="${"destination-info" + destID}" class="destination-info"></span>
+//             <div id="${"destination-options" + destID}" class="destination-options">
+//                 <input type="submit" value="Add flight info" onclick="Client.addFlight(event, ${destID})" onsubmit="Client.addFlight(event, ${destID})">
+//                 <input type="submit" value="Add hotel info" onclick="Client.addHotel(${self}, event, ${destID})" onsubmit="Client.addHotel(${this}, event, ${destID})">
+//                 <input type="submit" value="Print trip" onclick="Client.printHTML('mytrips')" onsubmit="Client.printHTML('mytrips')">
+//                 <input type="submit" value="Delete destination" onclick="Client.deleteDestination(event)" onsubmit="Client.deleteDestination(event)">
+//             </div>
+//             <div id="${"destination-details-container" + destID}" class="destination-details-container">
+//                 <div id="${"flight-info" + destID}"></div>
+//                 <div id="${"hotel-info" + destID}"></div>
+//             </div>
+//             <div id="${"weather-container" + destID}" class="weather-container">
+//                 <p id="${"weather-info" + destID}" class="weather-info"></p>
+//                 <span id="${"weather-details-container" + destID}"></span>
+//             </div>`

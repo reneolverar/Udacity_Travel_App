@@ -21,6 +21,19 @@ Clone this repo using GIT:
 ### Download the .zip file
 Click [here](https://github.com/reneolverar/Udacity_Sentiment_Analysis_Article_NLP/archive/refs/heads/main.zip) to download the .zip file.
 
+## Tools used
+* HTML
+* SCSS
+* Javascript
+* Node
+* Express
+* Webpack
+* GeoNames API
+* WeatherBit API
+* PixaBay API
+* Jest
+* Workbox
+
 ## Instructions to run the project
 
 The project can be run in both development and production modes.
