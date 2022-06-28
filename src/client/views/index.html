@@ -3,10 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Evaluate News Article</title>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <title>Travel App</title>
     </head>
 
-    <body>
+    <body onbeforeunload="return Client.saveSession()">
 
         <header>
             <div class="">
@@ -21,8 +24,10 @@
             <section>
                 <h1>Travel Planner</h1>
                 <form class="" onsubmit="return Client.testFunction(event)">
+                    Please choose trip name (for new trip just write a new name):
+                    <input class="" id="trip-name" type="text" name="trip-name" placeholder="Choose name i.e europe trip" value="Europe trip">
                     Please choose the city you are travelling to:
-                    <input class="travel-city" id="city" type="text" name="city" placeholder="City" value="Cerro Azul">
+                    <input class="travel-city" id="city" type="text" name="city" placeholder="City" value="London">
                     <p>Please choose the dates you are travelling:</p>
                     <div class="travel-dates">
                         <label for="trip-start">Start date:</label>
@@ -33,11 +38,12 @@
                         <input class="trip-end" type="date" id="trip-end" name="trip-end">
                     </div>
                     <input class="form-submit-btn" type="submit" name="" value="submit" onclick="return Client.testFunction(event)" onsubmit="return Client.testFunction(event)">
+                    <p id="loadingMsg"></p>
                 </form>
             <section>
 
             <section id="mytrips">
-                <strong>My destinations:</strong>
+                <strong>My trips:</strong>
             </section>
 
         </main>

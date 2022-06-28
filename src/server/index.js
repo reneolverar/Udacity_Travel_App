@@ -19,6 +19,11 @@ app.use('/images', express.static('src/client/media/images'))
 // Host weatherbit icons
 app.use('/weatherbit_icons', express.static('src/client/media/weatherbit_icons'))
 
+// Host and send cities file
+app.use('/cities', express.static('src/client/media/cities500'))
+app.get('/citiesFile', function (req, res) {
+    res.sendFile('src/client/media/cities500/cities500_reduced_city&country.csv')
+})
 // Dist folder for main.css for printing module
 app.use('/dist', express.static('dist'))
 

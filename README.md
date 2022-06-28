@@ -1,10 +1,22 @@
-# Udacity Front-End Nanodegree Project - Evaluate news article with NLP
+# Udacity Front-End Nanodegree Project - Travel App
 
 This project evaluates text using the MeaningCloud API, which evaluates aspects like polarity, irony and subjectivity.
 
-You can choose to input raw text or an URL to a news article / blog.
-
-A live demonstration of the project can be testet at: https://strong-khapse-48d3b8.netlify.app/
+Additionally to the mandatory features, the project was improved with the following add-ons:
+* Add end date and display length of trip.
+* Pull in an image for the country from Pixabay API when the entered location brings up no results (good for obscure localities).
+* Allow user to add multiple destinations on the same trip.
+* Pull in weather for additional locations.
+* Allow the user to add hotel and/or flight data.
+* Multiple places to stay? Multiple flights?
+* Allow the user to remove the trip.
+* Use Local Storage to save the data so that when they close, then revisit the page, their information is still there.
+* Instead of just pulling a single day forecast, pull the forecast for multiple days.
+* Incorporate icons into forecast.
+* Allow user to Print their trip and/or export to PDF.
+* Allow the user to add additional trips
+* Automatically sort additional trips by countdown.
+* Move expired trips to bottom/have their style change so it’s clear it’s expired.
 
 ## Getting Started
 
@@ -52,9 +64,12 @@ Once Node is installed, navigate to the folder where this project is located in 
 #### Dependecies:
 
 "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "moment": "^2.29.3",
     "node-fetch": "^3.2.6",
+    "print-js": "^1.6.0",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.9.2"
   },
@@ -77,15 +92,18 @@ Once Node is installed, navigate to the folder where this project is located in 
     "terser-webpack-plugin": "^5.3.3",
     "webpack-dev-server": "^4.9.2",
     "workbox-webpack-plugin": "^6.5.3"
+  }
 
-### Meaning cloud API Keys
+### API Keys
 
-Register to MeaningCloud to get your personal API KEY.
+Register to GeoNames, WeatherBit, and PixaBay to get your personal API keys.
 
 Create a file in the main directory called ".env" with the following code
 
 ```
-> API_KEY = <YOUR API KEY>
+> GEONAMES_USER_NAME = <YOUR API KEY>
+WEATHERBIT_APIKEY = <YOUR API KEY>
+PIXABAY_APIKEY = <YOUR API KEY>
 
 ```
 
