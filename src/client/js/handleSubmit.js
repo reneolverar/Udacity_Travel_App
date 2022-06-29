@@ -545,6 +545,3 @@ async function createCitiesArray () {
     let cityArray = csvFile.split("\n");
     return cityArray;
 };
-
-function test(event) {
-}
