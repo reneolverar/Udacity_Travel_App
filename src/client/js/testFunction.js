@@ -184,10 +184,10 @@ class Destination {
         }
         else if (this.daysToTrip < 15) {
             let sunrise, sunset
-            for (const element in this.sunrise) {
-                if (element != "") {
-                    sunrise = new Date(element * 1000).toLocaleTimeString("en-US")
-                    sunset = new Date(element * 1000).toLocaleTimeString("en-US")
+            for (let index = 0; index < this.sunrise.length; index++) {
+                if (this.sunrise[index] != "") {
+                    sunrise = new Date(this.sunrise[index] * 1000).toLocaleTimeString("en-US")
+                    sunset = new Date(this.sunset[index] * 1000).toLocaleTimeString("en-US")
                     break
                 }
             }
