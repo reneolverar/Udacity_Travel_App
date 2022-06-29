@@ -43,7 +43,7 @@ Additionally to the mandatory features, the project was improved with the follow
 ## Contents
 
 - [Getting Started](#getting-started)
-- [Instructions to run the project](#instructions-to-run-the_project)
+- [Running the project](#running-the-project)
 - [API Keys](#api-keys)
 - [Using the project](#using-the-project)
 
@@ -63,7 +63,7 @@ Clone this repo using GIT:
 ### Download the .zip file
 Click [here](https://github.com/reneolverar/Udacity_Travel_App/archive/refs/heads/main.zip) to download the .zip file.
 
-## Instructions to run the project
+## Running the project
 [(Back to top)](#contents)
 
 The project can be run in both development and production modes.
