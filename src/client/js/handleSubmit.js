@@ -5,7 +5,7 @@ let geonames_apikey, pixabay_apikey, weatherbit_apikey
 let res
 let cityArray
 
-export async function testFunction(event) {
+export async function handleSubmit(event) {
     event.preventDefault()
     console.log("::: Form Submitted :::")
 

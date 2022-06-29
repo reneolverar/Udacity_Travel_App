@@ -23,7 +23,7 @@
         <main>
             <section>
                 <h1>Travel Planner</h1>
-                <form class="" onsubmit="return Client.testFunction(event)">
+                <form class="" onsubmit="return Client.handleSubmit(event)">
                     Please choose trip name (for new trip just write a new name):
                     <input class="" id="trip-name" type="text" name="trip-name" placeholder="Choose name i.e europe trip" value="Europe trip">
                     Please choose the city you are travelling to:
@@ -37,7 +37,7 @@
                         <label for="trip-end">End date:</label>
                         <input class="trip-end" type="date" id="trip-end" name="trip-end">
                     </div>
-                    <input class="form-submit-btn" type="submit" name="" value="submit" onclick="return Client.testFunction(event)" onsubmit="return Client.testFunction(event)">
+                    <input class="form-submit-btn" type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
                     <p id="loadingMsg"></p>
                 </form>
             <section>
