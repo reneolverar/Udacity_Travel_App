@@ -1,6 +1,28 @@
 # Udacity Front-End Nanodegree Project - Travel App
 
-This project evaluates text using the MeaningCloud API, which evaluates aspects like polarity, irony and subjectivity.
+This project generates a trip summary card and PDF containing itinerary information input by the user.
+
+The project is a single-page application built for demonstration purposes. It integrates data from 3 APIs.
+
+This project was completed for the Udacity Front End Web Developer Nanodegree Program.
+
+![Example of a destination](https://github.com/reneolverar/Udacity_TravelApp/src/client/media/images/travel_app_example.png)
+
+### Tools used
+* HTML
+* SCSS
+* Javascript
+* Node
+* Express
+* Webpack
+* GeoNames API
+* WeatherBit API
+* PixaBay API
+* Jest
+* Workbox
+
+### Project criteria
+Criteria are listed in this [rubric](https://review.udacity.com/#!/rubrics/3636/view)
 
 Additionally to the mandatory features, the project was improved with the following add-ons:
 * Add end date and display length of trip.
@@ -18,7 +40,15 @@ Additionally to the mandatory features, the project was improved with the follow
 * Automatically sort additional trips by countdown.
 * Move expired trips to bottom/have their style change so it’s clear it’s expired.
 
+## Contents
+
+- [Getting Started](#getting-started)
+- [Instructions to run the project](#instructions-to-run-the_project)
+- [API Keys](#api-keys)
+- [Using the project](#using-the-project)
+
 ## Getting Started
+[(Back to top)](#contents)
 
 Follow one of the two following methods to get this project:
 
@@ -26,35 +56,25 @@ Follow one of the two following methods to get this project:
 Clone this repo using GIT:
 
 ```
-> git clone https://github.com/reneolverar/Udacity_Sentiment_Analysis_Article_NLP.git
+> git clone https://github.com/reneolverar/Udacity_Travel_App.git
 
 ```
 
 ### Download the .zip file
-Click [here](https://github.com/reneolverar/Udacity_Sentiment_Analysis_Article_NLP/archive/refs/heads/main.zip) to download the .zip file.
-
-## Tools used
-* HTML
-* SCSS
-* Javascript
-* Node
-* Express
-* Webpack
-* GeoNames API
-* WeatherBit API
-* PixaBay API
-* Jest
-* Workbox
+Click [here](https://github.com/reneolverar/Udacity_Travel_App/archive/refs/heads/main.zip) to download the .zip file.
 
 ## Instructions to run the project
+[(Back to top)](#contents)
 
 The project can be run in both development and production modes.
 
 ### Module set-up
 
-Running this project requires Node installed in your system.
+To run this app, you'll need the following installed globally on your machine:
+- [Node.js](https://nodejs.org/en/)
+- [NPM](https://nodejs.org/en/)
 
-Once Node is installed, navigate to the folder where this project is located in your system, and then install the required packages by running the following command:
+Once Node and NPM are installed, navigate to the folder where this project is located in your system, and then install the required packages by running the following command:
 
 ```
 > npm i --legacy-peer-deps
@@ -62,6 +82,8 @@ Once Node is installed, navigate to the folder where this project is located in 
 ```
 
 #### Dependecies:
+
+All dependencies (build tools & plugins), are listed in [package.json](./package.json).
 
 "dependencies": {
     "cors": "^2.8.5",
@@ -94,41 +116,49 @@ Once Node is installed, navigate to the folder where this project is located in 
     "workbox-webpack-plugin": "^6.5.3"
   }
 
-### API Keys
+## API Keys
+[(Back to top)](#contents)
 
 Register to GeoNames, WeatherBit, and PixaBay to get your personal API keys.
+- [Geonames](http://www.geonames.org/export/geonames-search.html)
+- [Weatherbit 16-Day Forecast](https://www.weatherbit.io/api/weather-forecast-16-day)
+- [Pixabay](https://pixabay.com/api/docs/)
 
 Create a file in the main directory called ".env" with the following code
 
 ```
 > GEONAMES_USER_NAME = <YOUR API KEY>
-WEATHERBIT_APIKEY = <YOUR API KEY>
-PIXABAY_APIKEY = <YOUR API KEY>
+> WEATHERBIT_APIKEY = <YOUR API KEY>
+> PIXABAY_APIKEY = <YOUR API KEY>
 
 ```
 
-### Using the project
+## Using the project
+[(Back to top)](#contents)
 
-##### To build files in dev mode
+### To build files in dev mode
 ```
 > npm run build-dev
 
 ```
 
-##### To build files in production mode
+### To build files in production mode
 ```
 > npm run build-prod
 
 ```
 
-##### To run all the unit tests
+### To run all the unit tests
 ```
 > npm test
 
 ```
 
-#### To spin up Express server(listens to port: 8081)
+### To spin up Express server(listens to port: 8081)
 ```
 > npm start
 
 ```
+
+### To view the app (on port 8081)
+In a browser window, navigate to [http://localhost:8081](http://localhost:8081).

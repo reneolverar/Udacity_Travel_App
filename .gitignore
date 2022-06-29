@@ -1,7 +1,5 @@
 node_modules
-MeaningCloud_APIKEY.txt
 dist
-package.json.tests.txt
-icons.tar.gz
+coverage
 # Environment variables
 .env
