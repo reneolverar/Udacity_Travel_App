@@ -6,7 +6,7 @@ The project is a single-page application built for demonstration purposes. It in
 
 This project was completed for the Udacity Front End Web Developer Nanodegree Program.
 
-![Example of a destination](https://github.com/reneolverar/Udacity_TravelApp/src/client/media/images/travel_app_example.png)
+![Example of a destination](https://github.com/reneolverar/Udacity_Travel_App/blob/main/src/client/media/images/travel_app_example.png)
 
 ### Tools used
 * HTML
