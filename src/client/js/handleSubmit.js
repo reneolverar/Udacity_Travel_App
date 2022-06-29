@@ -80,7 +80,6 @@ export async function handleSubmit(event) {
     // Check and decide where to insert trip
     checkDestOrder(dest)
 
-    return
     // Style trip if passed
     stylePastTrips()
 }
